@@ -30,7 +30,7 @@ COPY nginx/nginx.conf /usr/local/openresty/nginx/conf/
 COPY nginx/lua /usr/local/openresty/nginx/lua
 
 RUN mkdir -p /usr/local/openresty/nginx/static/staff
-COPY ./src/assets/staff /usr/local/openresty/nginx/static/staff
+COPY staff /usr/local/openresty/nginx/static/staff
 
 EXPOSE 80
 

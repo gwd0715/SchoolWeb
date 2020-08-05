@@ -3,6 +3,8 @@ services:
     nginx:
         restart: always
         build: ./frontend
+        volumes:
+            - ./statics:/usr/local/openresty/nginx/statics
         ports:
             - '80:80/tcp'
         depends_on:
@@ -13,14 +15,10 @@ services:
         build: ./backend
         depends_on:
             - db
-        ports:
-            - '9000:9000'
 
     db:
         restart: always
         image: postgres:12-alpine
-        ports:
-            - '5432:5432'
         volumes:
             - ./pgdata:/var/lib/postgresql/data
         env_file:
