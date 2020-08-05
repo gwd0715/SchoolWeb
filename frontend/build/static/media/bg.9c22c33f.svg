@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="333px" viewBox="0 0 1024 333" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop" fill="#FB7E84">
+            <path d="M0,265.262276 C268.662722,373.770721 609.996055,351.513979 1024,198.492049 C1025.39152,96.732312 1025.39152,30.5680848 1024,-0.000632643078 L0,-0.000632643078 L0,265.262276 Z" id="Path"></path>
+        </g>
+    </g>
+</svg>

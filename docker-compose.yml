@@ -5,3 +5,23 @@ services:
         build: ./frontend
         ports:
             - '80:80/tcp'
+        depends_on:
+            - node
+
+    node:
+        restart: always
+        build: ./backend
+        depends_on:
+            - db
+        ports:
+            - '9000:9000'
+
+    db:
+        restart: always
+        image: postgres:12-alpine
+        ports:
+            - '5432:5432'
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+        env_file:
+            - docker.env
