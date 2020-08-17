@@ -4,6 +4,7 @@ require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const app_1 = require("./app");
 const StaffRouter_1 = require("./Router/StaffRouter");
+const ProgramRouter_1 = require("./Router/ProgramRouter");
 (async () => {
     let retries = 5;
     while (retries) {
@@ -19,7 +20,11 @@ const StaffRouter_1 = require("./Router/StaffRouter");
             await new Promise((res) => setTimeout(res, 5000));
         }
     }
-    const app = new app_1.default([new StaffRouter_1.default()], 9000);
+    const appRouters = [
+        new StaffRouter_1.default(),
+        new ProgramRouter_1.default()
+    ];
+    const app = new app_1.default(appRouters, 9000);
     app.listen();
 })();
 //# sourceMappingURL=index.js.map

@@ -26,11 +26,14 @@ COPY build /usr/local/openresty/nginx/html
 
 RUN rm /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf.default
 
+RUN mkdir -p /usr/local/openresty/nginx/cert
+COPY nginx/cert /usr/local/openresty/nginx/cert
 COPY nginx/nginx.conf /usr/local/openresty/nginx/conf/
 COPY nginx/lua /usr/local/openresty/nginx/lua
 
 RUN mkdir -p /usr/local/openresty/nginx/static/staff
-COPY staff /usr/local/openresty/nginx/static/staff
+COPY ./src/assets/staff /usr/local/openresty/nginx/static/staff
+
 
 EXPOSE 80
 

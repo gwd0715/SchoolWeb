@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StaffDao_1 = require("../dao/StaffDao");
+const ProgramDao_1 = require("../dao/ProgramDao");
 const BadRequestException_1 = require("../exceptions/BadRequestException");
 const HttpException_1 = require("../exceptions/HttpException");
 const NotFoundException_1 = require("../exceptions/NotFoundException");
-class StaffController {
+class ProgramController {
     constructor() {
-        this.dao = new StaffDao_1.default();
+        this.dao = new ProgramDao_1.default();
     }
-    async getStaffIdFromReq(req, res, next) {
+    async getProgramIdFromReq(req, res, next) {
         const id = req.params.id;
         if (!id) {
             next(new BadRequestException_1.default());
@@ -18,21 +18,21 @@ class StaffController {
             next();
         }
     }
-    async getStaffFromReq(req, res, next) {
-        const staff = req.body;
-        if (staff) {
-            res.locals.staff = staff;
+    async getProgramFromReq(req, res, next) {
+        const program = req.body;
+        if (program) {
+            res.locals.program = program;
             next();
         }
         else {
             next(new BadRequestException_1.default());
         }
     }
-    async getAllStaff(req, res, next) {
+    async getAllProgram(req, res, next) {
         try {
-            const staffs = await this.dao.getAllStaff();
-            if (staffs) {
-                res.send(staffs);
+            const programs = await this.dao.getAllProgram();
+            if (programs) {
+                res.send(programs);
             }
             else {
                 next(new NotFoundException_1.default());
@@ -42,12 +42,12 @@ class StaffController {
             next(new HttpException_1.default(500, error.message));
         }
     }
-    async getStaffById(req, res, next) {
+    async getProgramById(req, res, next) {
         const { id } = res.locals;
         try {
-            const staff = await this.dao.getStaffById(id);
-            if (staff) {
-                res.send(staff);
+            const program = await this.dao.getProgramById(id);
+            if (program) {
+                res.send(program);
             }
             else {
                 next(new NotFoundException_1.default());
@@ -57,12 +57,12 @@ class StaffController {
             next(new HttpException_1.default(500, error.message));
         }
     }
-    async addSingleStaff(req, res, next) {
-        const { staff } = res.locals;
+    async addSingleProgram(req, res, next) {
+        const { program } = res.locals;
         try {
-            const newStaff = await this.dao.addSingleStaff(staff);
-            if (newStaff) {
-                res.send(newStaff);
+            const newProgram = await this.dao.addSingleProgram(program);
+            if (newProgram) {
+                res.send(newProgram);
             }
             else {
                 next(new NotFoundException_1.default());
@@ -72,12 +72,12 @@ class StaffController {
             next(new HttpException_1.default(500, error.message));
         }
     }
-    async addAllStaff(req, res, next) {
-        const { staff } = res.locals;
+    async addAllProgram(req, res, next) {
+        const { program } = res.locals;
         try {
-            const newStaffs = await this.dao.addAllStaffs(staff);
-            if (newStaffs) {
-                res.send(newStaffs);
+            const newPrograms = await this.dao.addAllPrograms(program);
+            if (newPrograms) {
+                res.send(newPrograms);
             }
             else {
                 next(new NotFoundException_1.default());
@@ -87,12 +87,12 @@ class StaffController {
             next(new HttpException_1.default(500, error.message));
         }
     }
-    async updateStaff(req, res, next) {
-        const { id, staff } = res.locals;
+    async updateProgram(req, res, next) {
+        const { id, program } = res.locals;
         try {
-            const formerStaff = await this.dao.updateStaffById(id, staff);
-            if (formerStaff) {
-                res.send(formerStaff);
+            const formerProgram = await this.dao.updateProgramById(id, program);
+            if (formerProgram) {
+                res.send(formerProgram);
             }
             else {
                 next(new NotFoundException_1.default());
@@ -102,16 +102,12 @@ class StaffController {
             next(new HttpException_1.default(500, error.message));
         }
     }
-    async deleteStaff(req, res, next) {
-        const { staff } = res.locals;
+    async deleteProgram(req, res, next) {
+        const { id } = res.locals;
         try {
-            const ids = [];
-            for (let i = 0; i < staff.length; i++) {
-                ids.push(staff[i].id);
-            }
-            const abandonedStaff = await this.dao.deleteStaffById(ids);
-            if (abandonedStaff) {
-                res.send(abandonedStaff);
+            const abandonedProgram = await this.dao.deleteProgramById(id);
+            if (abandonedProgram) {
+                res.send(abandonedProgram);
             }
             else {
                 next(new NotFoundException_1.default());
@@ -122,5 +118,5 @@ class StaffController {
         }
     }
 }
-exports.default = StaffController;
-//# sourceMappingURL=StaffController.js.map
+exports.default = ProgramController;
+//# sourceMappingURL=ProgramController.js.map

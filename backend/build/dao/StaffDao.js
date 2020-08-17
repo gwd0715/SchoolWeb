@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const Staff_1 = require("../entity/Staff");
-const console = require("console");
 class StaffDao {
     constructor() {
         this.repo = typeorm_1.getRepository(Staff_1.default);
@@ -11,6 +10,7 @@ class StaffDao {
         try {
             const staffs = await this.repo.find();
             if (staffs) {
+                staffs.sort((a, b) => a['id'] - b['id']);
                 return staffs;
             }
             else {
@@ -45,7 +45,6 @@ class StaffDao {
         }
     }
     async addAllStaffs(staffs) {
-        console.log(staffs);
         try {
             const newStaffs = [];
             for (let i = 0; i < staffs.length; i++) {
@@ -61,6 +60,9 @@ class StaffDao {
     async updateStaffById(id, staff) {
         try {
             const abandonedStaff = await this.repo.findOne(id);
+            if (staff['selfie'] === '') {
+                staff['selfie'] = abandonedStaff['selfie'];
+            }
             await this.repo.update(id, staff);
             return abandonedStaff;
         }
@@ -68,16 +70,20 @@ class StaffDao {
             throw new Error(error);
         }
     }
-    async deleteStaffById(id) {
+    async deleteStaffById(ids) {
         try {
-            const staff = await this.repo.findOne(id);
-            const response = await this.repo.delete(id);
-            if (response.raw[1]) {
-                return staff;
-            }
-            else {
-                return null;
-            }
+            const deletedStaff = [];
+            await typeorm_1.getManager().transaction(async (transactionalEntityManager) => {
+                for (let i = 0; i < ids.length; i++) {
+                    const staff = await transactionalEntityManager.findOne(Staff_1.default, ids[i]);
+                    deletedStaff.push({ ...staff });
+                    const removedEntity = await transactionalEntityManager.remove(staff);
+                    if (!removedEntity) {
+                        throw new Error('failed in Staff deletion');
+                    }
+                }
+            });
+            return deletedStaff;
         }
         catch (error) {
             throw new Error(error);
