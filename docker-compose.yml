@@ -7,6 +7,7 @@ services:
             - ./statics:/usr/local/openresty/nginx/statics
         ports:
             - '80:80/tcp'
+            - '443:443/tcp'
         depends_on:
             - node
 

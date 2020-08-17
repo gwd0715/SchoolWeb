@@ -8,7 +8,7 @@ RUN sed -i 's?http://dl-cdn.alpinelinux.org/?https://mirrors.aliyun.com/?' /etc/
 
 RUN apk add build-base
 
-RUN apk add pcre-dev openssl-dev zlib-dev perl-dev libressl-dev curl 
+RUN apk add pcre-dev openssl-dev zlib-dev perl-dev libressl-dev curl openssl
 
 RUN cd /root && wget https://openresty.org/download/openresty-1.17.8.2.tar.gz && tar -zxvf openresty-1.17.8.2.tar.gz
 RUN cd /root && wget https://github.com/fdintino/nginx-upload-module/archive/2.3.0.tar.gz && tar -zxvf 2.3.0.tar.gz
@@ -32,7 +32,7 @@ COPY nginx/nginx.conf /usr/local/openresty/nginx/conf/
 COPY nginx/lua /usr/local/openresty/nginx/lua
 
 RUN mkdir -p /usr/local/openresty/nginx/static/staff
-COPY ./src/assets/staff /usr/local/openresty/nginx/static/staff
+COPY staff /usr/local/openresty/nginx/static/staff
 
 
 EXPOSE 80
