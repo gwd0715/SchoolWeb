@@ -4,7 +4,8 @@ services:
         restart: always
         build: ./frontend
         volumes:
-            - ./statics:/usr/local/openresty/nginx/statics
+            - ~/statics:/usr/local/openresty/nginx/statics
+            - ~/certs:/usr/local/openresty/nginx/cert
         ports:
             - '80:80/tcp'
             - '443:443/tcp'
@@ -21,6 +22,6 @@ services:
         restart: always
         image: postgres:12-alpine
         volumes:
-            - ./pgdata:/var/lib/postgresql/data
+            - ~/pgdata:/var/lib/postgresql/data
         env_file:
             - docker.env
