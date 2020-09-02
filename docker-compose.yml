@@ -16,7 +16,7 @@ services:
         restart: always
         build: ./backend
         depends_on:
-            - db
+            - postgres
 
     postgres:
         restart: always
