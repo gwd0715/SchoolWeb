@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const app_1 = require("./app");
-const StaffRouter_1 = require("./Router/StaffRouter");
+const AuthRouter_1 = require("./Router/AuthRouter");
 const ProgramRouter_1 = require("./Router/ProgramRouter");
+const StaffRouter_1 = require("./Router/StaffRouter");
+const UserRouter_1 = require("./Router/UserRouter");
 (async () => {
     let retries = 5;
     while (retries) {
@@ -22,7 +24,9 @@ const ProgramRouter_1 = require("./Router/ProgramRouter");
     }
     const appRouters = [
         new StaffRouter_1.default(),
-        new ProgramRouter_1.default()
+        new ProgramRouter_1.default(),
+        new UserRouter_1.default(),
+        new AuthRouter_1.default()
     ];
     const app = new app_1.default(appRouters, 9000);
     app.listen();
